@@ -1,12 +1,14 @@
 import random
 
-import streamlit as st
-import pandas as pd
-import preprocessor,helper
-import plotly.express as ps
 import matplotlib.pyplot as plt
-import seaborn as sns
+import pandas as pd
+import plotly.express as ps
 import plotly.figure_factory as ff
+import seaborn as sns
+import streamlit as st
+
+import helper
+import preprocessor
 
 df= pd.read_csv('dataset/athlete_events.csv')
 region_df= pd.read_csv('dataset/noc_regions.csv')
@@ -169,10 +171,11 @@ if user_menu == 'Athlete wise Analysis':
     sport_list.sort()
     sport_list.insert(0, 'Overall')
     # sport_list.sort()
+    count = len(sport_list)
 
 
     st.title('Height Vs Weight')
-    selected_sport = st.selectbox('Select a Sport', sport_list)
+    selected_sport = st.selectbox('Select a Sport', sport_list, key = count)
     temp_df = helper.weight_v_height(df,selected_sport)
     fig,ax = plt.subplots()
     ax = sns.scatterplot(temp_df['Weight'],temp_df['Height'],hue=temp_df['Medal'],style=temp_df['Sex'],s=60)
